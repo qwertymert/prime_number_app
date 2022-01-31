@@ -3,6 +3,8 @@
 
 from tkinter import *
 
+# application frames
+
 window = Tk()
 
 frame = Frame(window)
@@ -14,28 +16,25 @@ center_frame.pack()
 bottom_frame = Frame(window)
 bottom_frame.pack(side=BOTTOM)
 
+
 # changing title and icon
-
 window.title("Prime Numbers")
-
 p1 = PhotoImage(file="pi-icon.png")
-
 window.iconphoto(False, p1)
 
+
 # size
-
 window.geometry("400x400+750+300")
-
 window.resizable(False, False)
 
+
+# number inputs
 data = Entry(frame)
-
 data1 = Entry(frame)
-
 data2 = Entry(frame)
 
 
-def summon_prime():
+def summon_prime():  # create prime calculator on window
     button1_1.pack_forget()
     button1_2.pack_forget()
     data.pack(pady="50")
@@ -46,7 +45,7 @@ def summon_prime():
     button4.pack(side=LEFT, pady=50)
 
 
-def summon_relatively_prime():
+def summon_relatively_prime():  # create relatively prime calculator on window
     button1_1.pack_forget()
     button1_2.pack_forget()
     data1.pack(side=LEFT, padx=10, pady=20)
@@ -59,7 +58,7 @@ def summon_relatively_prime():
     button4.pack(side=LEFT, pady=50)
 
 
-def summon_menu():
+def summon_menu():  # summon main menu
     data.pack_forget()
     data1.pack_forget()
     data2.pack_forget()
@@ -78,7 +77,7 @@ def quitting():
     quit()
 
 
-def relatively_prime():
+def relatively_prime():  # function for calculating relative primeness
     try:
         number1 = int(data1.get())
         number2 = int(data2.get())
@@ -123,28 +122,28 @@ def relatively_prime():
         label2["fg"] = "red"
 
 
-def prime():
+def prime():  # function for calculating primeness
     try:
         x = int(data.get())
         label["fg"] = "black"
         if x < 0:
             label["text"] = "Negative numbers can't be prime"
-        elif x == 0:
-            label["text"] = "Not prime"
-        elif x == 1:
+        elif x == 0 or x == 1:
             label["text"] = "Not prime"
         elif x == 2:
             label["text"] = "Prime"
-        for i in range(2, x):
-            if x % i == 0:
-                label["text"] = "Not prime"
-                break
-            elif x == i + 1:
-                label["text"] = "Prime"
+        else:
+            label["text"] = "Prime"
+            for i in range(2, x//2+1):
+                if x % i == 0:
+                    label["text"] = "Not prime"
+                    break
     except ValueError:
         label["text"] = "Please enter a valid number"
         label["fg"] = "red"
 
+
+# define application buttons and attach functions to them
 
 button1_1 = Button(master=frame, text="Test primeness", command=summon_prime)
 button1_1.pack(side=LEFT, padx=10, pady=75)
@@ -165,7 +164,7 @@ label2 = Label(master=center_frame, text="Please enter 2 different numbers that 
 
 button3 = Button(master=bottom_frame, text="Return to menu", command=summon_menu)
 
-
+# main application loop
 while True:
     window.update()
     mainloop()
